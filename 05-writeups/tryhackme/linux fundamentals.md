@@ -60,5 +60,6 @@ grep -R "Some_name" /etc/
 
 * `&&` = This allows two commands to run together, note that only both command will run only when command 1 is possible.
 
+* `>` = this is an output directing command, which puts it in a normal text file.
 
-
+* `>>` = This adds the content on the same file.
