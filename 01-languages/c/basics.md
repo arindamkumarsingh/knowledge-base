@@ -133,3 +133,4 @@ if we come at the end of the code, else if(state == OUT) , this says if you star
 
 <mark> As seen in the code, we have taken the cases of blank, tab, and new line character, so if still the state is out that means that we are at the first letter of the word.</mark>
 
+
