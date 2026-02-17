@@ -57,4 +57,34 @@ Some W's :-
 
 Specific guidelines how logs to be written, what to be logged etc.
 
-<img src="/home/arindam-kumar-singh/Pictures/Screenshots/Screenshot from 2026-02-17 18-43-34.png" alt="Description" width="300" height="200">
+
+* Common Event Expression (CEE): This standard, developed by MITRE, provides a common structure for log data, making it easier to generate, transmit, store, and analyse logs.
+* OWASP Logging Cheat Sheet: A guide for developers on building application logging mechanisms, especially related to security logging.
+*  Syslog Protocol: Syslog is a standard for message logging, allowing separation of the software that generates messages from the system that stores them and the software that reports and analyses them.
+*   NIST Special Publication 800-92: This publication guides computer security log management.
+*    Azure Monitor Logs: Guidelines for log monitoring on Microsoft Azure.
+*    Google Cloud Logging: Guidelines for logging on the Google Cloud Platform (GCP).
+*    Oracle Cloud Infrastructure Logging: Guidelines for logging on the Oracle Cloud Infrastructure (OCI).
+*    Virginia Tech - Standard for Information Technology Logging: Sample log review and compliance guideline.
+
+## Log collections
+
+To ensure correct time lines ensure NTP(Network time protocol) is used. Choose appropriate software for log collections.
+
+Time synchronisation can be performed in linux systems using:
+
+```bash
+ntpdate pool.ntp.org
+```
+
+## lOG managment
+
+once different type of log files are collated, then effective log management becomes a necessity. 
+
+FActors like
+
+* Storage
+* organising
+* backup
+
+matters in management of logs.
