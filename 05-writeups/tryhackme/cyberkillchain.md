@@ -89,4 +89,12 @@ Intrusion Prevention systems(IPS) can play a significant rule in blocking exploi
 
 ### egs
 
-regardless of t
+regardless of the exploit, persistence is necessary, like creating scheduled tasks in ms windows or cron job in linux, modifying startup scripts etc. installing a new system in windows or linux is a good approach.sometimes attacker can take advantage of system's inbuilt tools like leg windows tools and binarirees called living-off-the-land binaries(LOLBinaries).
+
+In some cases, the attackers need to download and execute additional payloads to fortify their access. For example, they might deploy a web shell after exploiting a web application. A web shell is a small script written in a programming language that is supported by the exploited server; it allows the attacker to execute operating system commands on the target via a web browser interface. Running a web shell over a standard protocol such as HTTPS will ensure they can log in to their target system while camouflaging their activity within HTTPS traffic.
+
+### Counter measures
+
+Endpoint Detection and Response(EDR) allows monitoring endpoints for suspicious activites like unusual process creation, modification etc.
+
+Application allowlisting prevents execution of unauthorised apps and runs only selected trusted apps
