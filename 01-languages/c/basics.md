@@ -134,3 +134,40 @@ if we come at the end of the code, else if(state == OUT) , this says if you star
 <mark> As seen in the code, we have taken the cases of blank, tab, and new line character, so if still the state is out that means that we are at the first letter of the word.</mark>
 
 
+#### digit counting and others
+
+
+```c
+#include<stdio.h>
+
+int main(){
+
+	int i, c, nwhite, nother;
+	int ndigit[10];
+
+	for(i = 0; i < 10; i++){
+		ndigit[i] = 0;
+	}
+
+	while ((c = getchar()) != EOF){
+		if ( c >= '0' && c <= '9'){
+			++ndigit[c - '0'];
+		}
+		else if (c == ' ' || c == '\t' || c == '\n')
+		{
+			++nwhite;
+		}
+		else
+		++nother;
+	
+	}
+	printf("digits = ");
+	for(i = 0; i < 10; ++i){
+		printf("%d", ndigit[i]);
+	}
+	printf(", white space = %d, other = %d\n", nwhite, nother);
+	
+}
+```
+
+`++ndigit[c - '0']` = this is the main brain child, so whenever we put '' this symbol, it stores into the computer as ascii values, so this i called mapping function, which helps us to jump right into its memory location.
