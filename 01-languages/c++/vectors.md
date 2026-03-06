@@ -67,3 +67,4 @@ So for example we initialize a vector and then push a single element, then in th
 vec - size & capacity
 
 so size is 3 in the above eg and capacity is 4.
+
