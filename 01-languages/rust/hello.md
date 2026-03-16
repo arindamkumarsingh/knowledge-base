@@ -67,3 +67,53 @@ can run the exec through
 Now instead of using `cargo build` and create an executable file everytime we can use `cargo check` to see if the program is compiling or not. for big projects we use this to know if its still compiling or not. use cargo build when its completed and ready to use an executable.
 
 U can use `cargo run` directly to run rather than pinpointing location and running it. 
+
+### Building for release
+
+`cargo build --release` 
+this compiles it with optimisations which makes the code much faster to run but takes more time to compile, so there are two phases, one in development so no need to use this command when continous compiling and all is required, and other when users use it so no need to rebuilt it repeatedly and to run as fast as  possible.
+
+# Guessing game
+
+First part of the game is to ask user input, process input and check the input is in expected form, will be done main.rs
+
+```rust
+use std::io;
+
+fn main() {
+    println!("Guess the number!");
+
+    println!("Please input your guess.");
+
+    let mut guess = String::new();
+
+    io::stdin()
+        .read_line(&mut guess)
+        .expect("Failed to read line");
+
+    println!("You guessed: {guess}");
+}
+```
+
+we will go line by line
+
+> use std::io;
+
+means input output library comes into scope from the standard library `std`.
+
+Some predefined set of items brings into scope in every program, this is called *prelude* in https://doc.rust-lang.org/stable/std/prelude/index.html.
+
+so here if you explicitly wants to bring a type into the scope you use `use` statement.
+
+#### Storing values into variables
+
+```rust
+let mut guess = String::new();
+```
+
+another eg.
+
+```rust
+let apples = 5
+```
+so in Rust, variables are immutable by default, meaning once a value given to a variable it wont change, so to make a variable mutable we use `mut`.
