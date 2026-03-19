@@ -52,3 +52,23 @@ There must be mechanism that can prevent processes from running any instruction 
 
 ### Kernel
 
+When computer is booted, the instruction pointer sshould point or start at somewhere so that program is kernel. This has almost full acess to comp memory and runs the software in computer which helps it to run effectively(**Userland programs**). 
+
+> Linux is a kernel, and userland softwares like shells(bash,zsh). macOS --> XNU and Windows Kernel -->  NT kernel.
+
+MOdern archs have two options:- Kernel/supervisor mode and user mode.  
+
+In kernel mode almost anything is possible and execute any instruction and access any memory. In user mode, limited memory and I/O access.
+
+All drivers run in kernel mode and applications run in user mode.
+
+Processors start in kernel mode and switches to user mode. 
+
+#### aRch
+
+**x86-64 arch** - privileges is encode in rings(0-3) but ring 0 and ring 3 is only used. ring 0 = kernel, ring 3 = user
+
+represent in binary form the last two bits from **cs - code segment register**. 
+
+**CPL** = Current Privilege level are the lowest 2 bits of cs.
+
