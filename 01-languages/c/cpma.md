@@ -28,7 +28,7 @@ Some specific commands to spot errors while compiling.
 
 3. `-ansi` = enables few features which are disables.
 
-4. `-std=c99 = specifies the version of c for compiler to use.
+4. `-std=c99' = specifies the version of c for compiler to use.
 
 When a comment is added does it replace or put black spaces in it or what,
 
@@ -51,7 +51,7 @@ Three key features- directives, functions and statements.
 
 Commands intended for the preprocessor is called directives, such as #include directive.
 
-which means `stdio.h` has to be includes before the program starts compiling, many such headers files exists, we include this because c has no inbuilt read and write functions. Java has it.
+which means `stdio.h` has to be included before the program starts compiling, many such headers files exists, we include this because c has no inbuilt read and write functions. <mark>Java has it.</mark>
 
 ##### Functions
 
@@ -64,13 +64,13 @@ printf("To C, or not to C: that is the question.\n");
 return 0;
 }
 ```
-int just before main includes that it has integer value, void in parenthesis means main has no arguments.
+'int' just before 'main' includes that it has integer value, void in parenthesis means main has no arguments.
 
-For return 0; causes program to terminate and return a value 0, if u dont include this return statement, some compilers will stiill allow it to be terminated while others may not so, as it wouldn't have returned an integer value.
+For return 0; causes program to terminate and return a value 0, if u dont include this return statement, some compilers will still allow it to be terminated while others may not so, as it wouldn't have returned an integer value.
 
 ##### Statement
 
-as in the above code, it calls the function `printf`.
+As in the above code, it calls the function `printf`.
 
 
 ##### COmments
@@ -79,7 +79,7 @@ as in the above code, it calls the function `printf`.
 
 ### Volume division
 
-By default, c round downs on divising, `/` so if we want to force the integer division to round up we use the form
+By default, c round downs on divising, `/` so if we want to force the integer division to round up we use the form:-
 
 x/d = (x + d - 1)/d
 
@@ -162,7 +162,7 @@ here any name can be given, but mostly all letters must be upper-case, just a co
 
 ## Layout of a C prog
 
-think of the c program as tokens, group of characters than can't split up without changing their meaning, identifiers and keywords are token, or the operators + , - etc...
+think of the c program as tokens, group of characters then can't split up without changing their meaning, identifiers and keywords are token, or the operators + , - etc...
 
 ```c
 printf("Height: %d\n", height);
@@ -206,7 +206,7 @@ int main(void){
 }
 ```
 
-In the scanf part, i may want only till 2 decimal point, but we say that the variable is the floatin gpoint and wont be decided now but in the printing format.
+In the scanf part, i may want only till 2 decimal point, but we say that the variable is the floating point and wont be decided now but in the printing format.
 
 so we will replace `%.2f` with `%f`.
 
@@ -220,7 +220,7 @@ Horner's Rule = factoring with products taking x common.
 
 Formatting string + values/variables
 
-Format string has ordinary characters as well as conversion specifications(%) acts as a placeholder(empty space ) that gets filled by the values, so this specifes how the value will be converted from(binary) to int or float etc.
+Format string has ordinary characters as well as conversion specifications(%) acts as a placeholder(empty space) that gets filled by the values, so this specifes how the value will be converted from(binary) to 'int' or 'float' etc.
 
 #### ERR
 
@@ -256,16 +256,16 @@ So if we have to print 123 and if we use %4d it will print *123.  * - space. If 
 
 **Precision**, p, depends on X, conversion specifier, 
 
-* d - displays an integer in decimal, the p then acts as the minimum number to display. so %d == %.1d.
+* 'd' - displays an integer in decimal, the p then acts as the minimum number to display. so %d == %.1d.
 
-* e - displays floating point in exponential form, p shows how many digits to appear after decimal, default is 6, so if p == 0, then decimal point not displayed.
+* 'e' - displays floating point in exponential form, p shows how many digits to appear after decimal, default is 6, so if p == 0, then decimal point not displayed.
 
-* f - Display floating in fixed decimal same work as e.
+* 'f' - Display floating in fixed decimal same work as e.
 
-* g - shows in either exponential or fixed point, depends on number's size.
+* 'g' - shows in either exponential or fixed point, depends on number's size.
 
 
-g specifier is helpful where size can't be predicted...
+* g specifier is helpful where size can't be predicted...
 
 
 printf to formal nos.
@@ -306,7 +306,7 @@ this `|` will show the gap between each formatting.
 
 ### Escape sequences
 
-`\n` or others used this is called the above topic. 
+* `\n` or others used this is called the above topic. 
 
 
 This shows the compiler what to perform upon printing.
