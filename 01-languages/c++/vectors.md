@@ -68,3 +68,8 @@ vec - size & capacity
 
 so size is 3 in the above eg and capacity is 4.
 
+# Maximum Subarray Sum
+
+A subarray is a continuous part of an array
+
+`[1, 2, 3,]

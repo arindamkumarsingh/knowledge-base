@@ -72,3 +72,8 @@ represent in binary form the last two bits from **cs - code segment register**.
 
 **CPL** = Current Privilege level are the lowest 2 bits of cs.
 
+### Syscall
+
+A procedure that lets a program transition from user mode to kernel space, jumping from programs code into OS Code.
+
+This is done using a feature called software interrupts.

@@ -4,7 +4,7 @@ Avoid C pitfalls - after cpma, read Andrew Koenig's C Traps and Pitfalls. Modern
 
 ## Compiling and linking
 
-3 Steps:-
+3 Steps:-d
 
 * **Preprocessing** = The program is given to a preprocessor and obeys the command given by `#` symbol, its like an editor which can add things.
 
