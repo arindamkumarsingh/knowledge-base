@@ -72,4 +72,15 @@ so size is 3 in the above eg and capacity is 4.
 
 A subarray is a continuous part of an array
 
-`[1, 2, 3,]
+`[1, 2, 3, 4, 5]`
+
+continuous like :- 1,2,3,4,5
+
+12, 23, 34, 45
+
+123, 234, 345 etc
+
+subarrays maximum numbers are = n*(n+1)/2
+
+So since its continuous if we can find the starting and the end part of the subarray we can find the whole array. 
+
