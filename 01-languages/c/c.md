@@ -844,3 +844,167 @@ jsut pass s or t in the function
 
 a `void*` enables us to write code type-agnostic which gives us some flexibility.
 
+Some function are :-
+
+1. `memcpy()` copies bytes of memory from one pointer to another, but those pointers can point to any type, so memcpy takes advantage of this fact
+and ensures bytes are iterated over other.
+
+built-in memcpy function
+
+```c
+void *memcpy(void *s1, void *s2, size_t n)
+
+```
+this function copies from s2 to memory starting of s1 but both are voids.
+
+So we can copy a string with memcpy
+
+```c
+#include<stdio.h>
+#include<string.h>
+
+int main(void){
+    char s[] = "Goat";
+    char t[100];
+
+    memcpy(t, s, 7);
+
+    printf("%s\n", t);
+}
+```
+
+```c
+#include<stdio.h>
+#include<string.h>
+
+int main(void){
+    int a[] = {11, 22, 33};
+    int b[3];
+
+    memcpy(b, a, 3 * sizeof(int));
+
+    printf("%d\n", b[1]);
+}
+```
+
+if its a float, or strucct or else u should have a pointer to it, and above is array so there was 
+    no need for a pointer or anything.
+
+in the string example there was no need to do size of char because its 1 only so we would have been doig 7 * 1.
+
+so if we didnt had `void*` with us then we would have had to define seperate functions for each data type
+
+```c
+memcpy_int(int *a, int *b, int count);
+memcpy_float(float *a, float *b, int count);
+memcpy_double(double *a, double *b, int count);
+memcpy_char(char *a, char *b, int count);
+memcpy_unsigned_char(unsigned char *a, unsigned char *b, int count);
+
+```
+
+Here are some limitations of void*
+
+1. we cannot do pointer arthmetic on void*
+2. cannot dereference a void*
+3. cannot use arrow operator on void* as it means dereference.
+4. cannot use array notation on void* also means dereference.
+
+We can do dereferencing by assigning another variable of desired type and then assigning the void* to it.
+
+```c
+char a = 'x';
+
+void* p = &a;
+char* q = p;
+
+printf("%c", *p);
+```
+
+with this we can write our own memcpy
+
+```c
+void *my_memcpy(void *dest, void *src, int byte_count){
+
+    char *s = src, *d = dest;
+
+    while(byte_count--){
+        *d++ = *s++;
+    }
+
+    return  dest;
+}
+```
+
+in the while statement, we see that *d = *s, so from source bytes gets transfered to dest, but alse
+after assignment, it gets post incremented so that it moves on to the next available memory.
+
+<mark>review the qsort and compar functions afterwards.</mark>
+
+# Manual Memory Allocation
+
+We can tell c as to how much block of memory we need to keep to ourself and the most important is to tell
+it when we want to free it, if we dont then a **memory leak** can occur and the process will continue to reserve the memory 
+untill it exits.
+
+Its as simple(:-
+
+*If u manually allocated it, u have to manually free it when u are done with it*.
+
+The automatic local variables(ones who gets out of scope when outside a function) are allocated "on the stack" while
+manually allocated one stay on the heap.
+
+Some new functions which can be found with `stdlib.h` library.
+
+## Allocating and deallocating
+
+`malloc()` function accepts no. of bytes to allocate and returns void pointer to that block and that void pointer can then be assigned
+to any pointer we want, so how do we allocate the amt of bytes...
+
+We use the `sizeof()` function , if we want room for a single int, we do `sizeof(int)`.
+
+after using we can call free() to call and be used for something else.
+
+```c
+int *p = malloc(sizeof(int));
+
+*p = 12;
+
+printf("%d\n", *p);
+
+free(p);
+```
+
+This is useful for complex tab.
+
+## Error checking
+
+The allocation functions like malloc() returns a pointer to the newly allocated stretch of memory or NULL.
+Buut some OSes like linux can be made in such way that it never returns null even out of memory.
+
+error handling:-
+
+```c
+int *x;
+
+x = malloc(sizeof(int) * 10);
+
+if(x == NULL){
+    printf("error allocating 10");
+}
+```
+
+OR
+
+```c
+int *x;
+
+if ((x = malloc(sizeof(int) * 10)) == NULL) {
+    printf("Error allocating 10 ints\n");
+    // do something here to handle it
+}
+```
+
+assingment and condition on same line
+
+
