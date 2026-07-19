@@ -420,4 +420,427 @@ int main(void)
     printf("%s\n", t);  // "zello, world!"
 }
 ```
-destinatin pointer is the first pointer.
+destination pointer is the first pointer.
+
+# Structs
+
+`struct` is a user defined type that can hold multiple pieces of data. kinda bundles them together, just like the concept of classes and objects.
+
+## TO declare a struct
+
+```c
+struct car{
+    char* name;
+    float price;
+    int speed;
+}
+```
+done in global scope(outside any function)
+
+so we are  making a new type here, which is `struct car` 
+
+by the use of dot we access the multiple fields.
+
+```c
+struct car saturn;
+
+saturn.name = "BLAH::K"
+saturn.price = 15999.99
+saturn.speed = 175;
+```
+
+## Struct intializers
+
+a better way to intialize is writting in together
+
+```c
+struct car {
+    char *name;
+    float price;
+    int speed;
+};
+
+// Now with an initializer! Same field order as in the struct declaration:
+struct car saturn = {"Saturn SL/2", 16000.99, 175};
+```
+
+this cannot happen to variable which is defined.
+
+to make this code safer, we see that the initializer has to be in order, to be more precise.
+
+`struct car saturn = {.speed=175, .name ="Saturn"};`
+
+## Passing structs as a function
+
+1. pass a struct
+2. pass the pointer to struct
+
+2 cases where we want the pointer of struct to pass in function
+
+1. the function has to make changes in the original function
+
+2. struct  is large or expensive to copy that into it, so just copy the pointer.
+
+```c
+//-snip-
+
+struct car saturn
+
+set_price(&saturn, 700.1);
+```
+
+so here we need to make a function which changes the price of thecar.
+
+```c
+void set_price(struct car *c, float new_price){
+    c.price = new_price;
+}
+```
+this gives error because `.` works for structs only, not for pointers.
+
+so what about we dereference the pointer to access the struct.
+
+```c
+void set_price(struct car *c, float new_price){
+    (*c).price = new_price;
+}
+```
+
+workable, looks ugly tho.
+
+**ARROW OPERATOR**
+
+This is useful for when u have a pointer to it.
+
+```c
+c->price = new_price;
+```
+
+TO compare struct, u have to compare each fields of the structs.
+
+# FILE I/O
+
+**FILE* DATA TYPE** 
+
+Streams of data or file from any source.
+
+`stdin` = standard input by keyboard default
+
+`stdout` = standard output, generally by screen by default
+
+`stderr` = standard error by screen default
+
+these above we have been using these implicitly.
+
+```c
+printf("HELLO");
+fprintf(stdout, "HELLO");
+```
+
+Typical OS allows to redirect output or errors either to terminal screen or to files.
+
+So in a POSIX shell, and run the program in such way that print the non-error into one file
+
+## Reading text files
+
+Streams are characterized in 2 ways :- text and binary
+
+```c
+#include <stdio.h>
+
+int main(void)
+{
+    FILE *fp;                      // Variable to represent open file
+
+    fp = fopen("hello.txt", "r");  // Open file for reading
+
+    int c = fgetc(fp);             // Read a single character
+    printf("%c\n", c);             // Print char to stdout
+
+    fclose(fp);                    // Close the file when done
+}
+```
+
+`r` was passed as string as many strings are passed like different options which means open a text stream for reading.
+
+we use fgetc() function to get a character from the stream, but why did we write c as int than char.
+
+FILE* keeps track of position in file, so subsequent cals will get next character.
+
+## END OF FILE
+
+EOF is a macro. Its not a character but a special integer(-1) which signals, u tired to read but no more data.
+
+#### HOW fgetc() works
+
+```c
+int c;
+
+while ((c = fgetc(fp)) != EOF)
+    putchar(c);
+```
+
+EOF is return only after reading past the last character.
+
+now if char could store every possible byte there would be not extra space for EOF. int can represent far movre values than char.
+
+```c
+#include<stdio.h>
+
+int main(void){
+    FILE *fp;
+    int c;
+
+    fp = fopen("hello.txt","r");
+
+    while((c = fgetc(fp)) != EOF)
+        printf("%c", c);
+
+    fclose(fp);
+
+}
+```
+
+### Reading a line at a time
+
+A Code for reading a file
+
+```c
+#include <stdio.h>
+
+int main(void)
+{
+    FILE *fp;
+    char s[1024];  // Big enough for any line this program will encounter
+    int linecount = 0;
+
+    fp = fopen("quote.txt", "r");
+
+    while (fgets(s, sizeof s, fp) != NULL) 
+        printf("%d: %s", ++linecount, s);
+
+    fclose(fp);
+}
+```
+
+## Formatted input
+
+```c
+#include<stdio.h>
+
+int main(void)
+{
+    FILE *fp;
+    char name[1024];
+    float length;
+    int mass;
+
+    fp = fopen("quote.txt","r");
+
+        while(fscanf(fp, "%s %f %d", name, &length, &mass) != EOF)
+            printf("%s whale, %d tonnes, %.1f meters\n", name, mass, length);
+
+        fclose(fp);
+}
+```
+
+here no `&` at name because array and pointer significance.
+
+# typedef
+
+We can use this to make an alias for an existing type
+
+
+```c
+typedef int blah;
+
+blah x = 10;
+```
+
+we can make a number of types for the same type
+
+```c
+typedef int blah, blahblah, blahblahblah
+```
+
+## Application
+
+### typedef and struct
+
+we can use typedef to shorten the whole thing which we have to write
+
+```c
+struct animal {
+    char *name;
+    int leg_count, speed;
+};
+
+//  original name      new name
+//            |         |
+//            v         v
+//      |-----------| |----|
+typedef struct animal animal;
+
+struct animal y;  // This works
+animal z;         // This also works because "animal" is an alias
+```
+
+A more common way of doing this is
+
+```c
+
+typedef struct animal{
+    char *name;
+    int leg_count, speed;
+} animal;
+
+animal z;
+```
+
+Another shortcut is *anonymous structures* which is not naming the struct but only alias
+
+```c
+//  Anonymous struct! It has no name!
+//         |
+//         v
+//      |----|
+typedef struct {
+    char *name;
+    int leg_count, speed;
+} animal;                         // <-- new name
+
+//struct animal y;  // ERROR: this no longer works--no such struct!
+animal z;           // This works because "animal" is an alias
+```
+
+```c
+typedef struct {
+    int x, y;
+} point;
+
+point p = {.x=20, .y=40};
+
+printf("%d, %d\n", p.x, p.y);  // 20, 40
+```
+
+at point p we have done .x and .y this is done so that order can be removed and specification to be done.
+
+### typedef and her types
+
+Lets take an example that if we have int in my code over so many places, it will be painful if we have to convert them all to double, so here `typedef` comes   to  save    us.
+
+```c
+typedef float app_float;
+
+app_float f1,f2,f3;
+```
+
+```c
+typedef long double app_float;
+
+app_float f1, f2, f3;
+```
+
+### typedef and pointers
+
+```c
+typedef int *intptr;
+
+int a = 10;
+intptr x = &a;
+```
+
+not good in practice.
+
+
+# Pointers-II
+
+we can do math, addition or subtraction to pointers.
+
+SO if we add one to a pointer, it moves to the the next item of that type directly.
+
+```c
+int a[5] = {1, 2, 3, 4, 5};
+int *p = &a[0];
+```
+
+```c
+#include<stdio.h>
+
+int main(void)
+{
+    int a[5] = {1, 2, 3, 4, 5};
+
+    int *p = &a[0];
+
+    for(int i = 0; i < 5; i++){
+        printf("%d\n", *(p + i));
+    }
+}
+```
+
+works the same for array notation.
+
+if we add 1 to pointer of int, then it jumps ahead of sizeof(int).
+
+## changing pointers
+
+we can do that while knowing the value and doing while loop and incrementing pointers till it reaches that certain value.
+
+```c
+while(*p != 999){
+    printf("%d", *p);
+    p++;
+}
+```
+
+## Subtracting pointers
+
+Can subtract two pointers to find the difference between them, and calculate how many ints there are between two `int*` and happens within the single array.
+
+```c
+#include <stdio.h>
+
+int my_strlen(char *s)
+{
+    // Start scanning from the beginning of the string
+    char *p = s;
+
+    // Scan until we find the NUL character
+    while (*p != '\0')
+        p++;
+
+    // Return the difference in pointers
+    return p - s;
+}
+
+int main(void)
+{
+    printf("%d\n", my_strlen("Hello, world!"));  // Prints "13"
+}
+```
+
+Above code is how strlen works.
+
+## Array/Pointer Equivalence
+
+Formula
+
+`a[b] == *(a+b)`
+
+a and b can be expressions.
+
+we cant move an array variable gives error but can move pointers.
+
+If we have a functino whcih takes a pointer argument we can either pass an array or a pointer to function and it can work
+
+```c
+char s[] = "antelopes";
+char *t = "wombates";
+```
+jsut pass s or t in the function
+
+## Void pointers
+
+a `void*` enables us to write code type-agnostic which gives us some flexibility.
+
