@@ -1,145 +1,170 @@
+# GIT
 
-# Basics
+### What is git
 
-## Intro
+Git is snapshots not differences of patches etc, it rather stores the whole snapshots of files.
 
-Linus  Torvalds created Git in 5 days. 
+### GIt has integrity
 
-Git commands are mainly divided into high-level(porcelain) and low-level(plumbing). Porcelain commands are used more often by developers, like git add commit push.
+everything is checkummed and stores so it becomes impossible to change the content of the files.
+Git uses mechanism called SHA-1 hash and is calculated based on file or directory structure,
 
-Before getting into git we first setup an 'identity' like user.name and user.email
+### GIt only adds data
 
-```
-git config --get user.name
+After we have commited, we can see experiment with it without worrying about anything
 
-git config --get user.email
-```
-Use the above commands if already set to check.
+### THe Three states
 
-If not set, use the following =
+* Modified - changed a file but not commited to database.
 
-```
-git config --add --global user.name "github_username_here"
+* Staged - marked a modified file to go to ur next commit snapshot.
 
-git config --add --global user.email "email@example.com
-```
+* Commited - data safely stored in local database.
 
-## Repos
+Working tree - a checkout of a single version of project pulled out from the compressed database in Git dir.
 
-After configuration, first steps usually are creating a repository commonly called repo. A single project can have a Single repo. Repos are like directories which contains project folders and files. 
+Staging area - a file which holds info of what will go into the next commmit.
 
->Everything about git repos is there in .git
+Git directory - where git stores metadata and object database. This is what gets cloned .
 
+Workflow-
 
-`git init`
-
-this command is just used to create an empty directory or transform a dir into a git repo but empty.
-
-### STATUS
-
-A file can be in 3 stages :-
-
-* untracked
-
-* staged
-
-* committed
-
-#### Untracked
-
-> Deleting untracked files can be painful!
-
-> whenever you make a new file and did whatever you wanted to add in the file, the initial stage is untracked.
-
-#### Staged
-
-`git add <file_name>`
-
-After using this command the file becomes stage in the Index.
-
->Index is the section where all the files untracked, staged, commited can be visible.
-
-#### Commit
-
-A commit is like a snapshot of the repo at a time, so the changes made get saved in it.
-
-`git commit -m "Your message here"`
-
-<mark>THIS IS LITERALLY THE HALF OF GIT WHICH MOST OF US WILL BE USING IN OUR DAILY LIFE</mark>
+u modify, then we select what we want to stage for next commit, do a commit.
 
 
-### GIT LOG
+Mostly all the git commands will be run on the command line only.
 
-This shows the version control aspect of git.
-This shows who and when they have made commits and changes in the repo.
+## First time git setup
 
-> Very useful command
+Git has `git config` which helps set configuration variable. THese variables are stored in three diff places:-
 
-`git --no-pager log -n 10`
+1. `[path]/etc/gitconfig` file containes values of every user on system and repos, if we pass `--system` to `git config` it reads from this file but requires superuser priveledge
 
-Here the (no pager) means the output will be shown in the terminal rather than opening a seperate page.
+2. `~/.gitconfig` or `/.config/git/config` - values specific to the user. Can make git read this by passing `--global` and affects all repos u work with system.
 
-```
-git --no-pager log -n 10 --oneline
+3. `config` file in `.git/config` of the repo currently used, its specific to that that repo and this is by default and we need to be in git repo to this option to work properly, u can force by `--local`.
 
-git --no-pager log -n 10 --oneline --parents
+Each level can override the previous level.
 
-git --no-pager log -n 10 --oneline --parents --graph
+to know all the settings and the source.
+
+`git config --list --show-origin`.
+
+### Identity.
+
+when git installed,we set user name and email address as every git commit uses this and its immutable to the commits.
+
+```bash
+
+git config --global user.name "John doe"
+git config --global user.email johndoe@example.com
 ```
 
-# HASHES
+U need to do this once and if u want to override this, just use the above without global as it will override the global as discussed above.
 
-Each commit has a unique hash. So there are factors which affects the end hash :-
+After creating a new repo with `git init`. To set main as default branch.
 
-* The commit message
-* The author's name and email
-* The date and time
-* Parent(previous) commit hashes
+`git config --global init.defaultBranch main`
 
-So to have same hash all the above must happen at same time.(Almost never)
+## Help
 
-<mark>HASH = SHA</mark>
+```bash
+git help <verb>
+git <verb> --help
+man git-<verb>
 
-## Plumbing
-
-All the data in a git repo is stored directly in the `.git/objects`.
-
-> Under the objects dir we can find the hash of our commit in the objects.
->commit is a type of object.
-
-### Note
-
-There is a concept called inode busting in linux OSes. So what happens is there is an inode usage indicator in these os so when the count reaches 100 % , the massive files starts dividing itself to decrease the count of the huge files(inode).
-
-So it takes the first two character of file and makes it a directory.
-
----
-
-### Cat the commit
-
-When you go to the location of git/objects and eventually reach the commit and then `cat hash` you can see that it is written in gibberish.
-
-This is because the git stores it in raw bytes and that's why git is in small size.
-
-So, Git has its own in-built command `git cat-file -p <hash>`, so this command can read the contents of the file easily.
 
 ```
-cd .git/objects/e6/778e7169985c41e0c0d9c9b842346594f81ce9
 
-git cat-file -p e6778e7
+above are 3 wasy to get man command equivalent.
+
+if not comprehensive man-page then just add `-h` before a command.
+
+
+# GIt basics
+
+### TO get a git repo
+
+1. take local dir and turn into git repo
+
+2. clone an existing git repo.
+
+#### initializing
+
+```bash
+cd go/to/ur/path
 ```
-<mark> this is an example case, usually doing cat-file we dont need to put whole hash, just starting 5 letters.</mark>
 
-now the output is :-
+and
 
-> tree 4c42c3e56b05f3b7065a9c426298a89a72585aef
+```bash
+git init
+```
 
-now take this tree hash and cat file it.
+creates a new sub dir called `.git` contains a git reppo skeleton. Nothing is added yet, to start vcs shit, u should do git add to some files and then commit.
 
-The output is :-
+## Changes to repo
 
-> 100644 blob 63778e7169985c41e0c0d9c9b842346594f81ce9    contents.md
+Tracked files are ones whihc were present in the last snapshot as well as newly staged files- these are the one unmodified, modified or stages.
 
-when we cat-file the hash in this, its the same as the contents.md.
+Untracked files are everything else which were not present in last snapshot
+
+To know which files are in which state use `git status` command.
+
+### Tracking new files
+
+Done by `git add`.
+
+Now lets take a file called Readme.md, so if we write down something, do git add but then u remember something to add
+u will make changes, but the file is added so the changes must have already been done, we are wrong.
+
+We will see both readme in to be commited and unstaged also. As git stages the file version u `git add`ed.
+
+So u have to git add again to the latest version.
+
+`git status -s` to make the message more compact.
+
+### ignoring files
+
+If we want to git to ignore a set of files that is produced by the build system.
+
+```bash
+cat .gitignore
+*.[oa]
+*~
+```
+
+Firs tline tells to ignore `.o` or `.a` the second line tells to ignore files with `~` which is used by text editors for temporary files.
+
+#### Some paters for gitignore
+
+* Blank lines or lines with `#` are ignored.
+
+* Start pattern with forward slash to avoid recursion.
+
+* End pattern with forward slash to spec a dir.
+
+* Negate a patern with exclamation point.
+
+below is a eg. of gitignore.
+
+
+```
+*.a(ignores all .a files)
+
+!lib.a ( but track lib.a, even if ignoring all .a files)
+
+/TODO (ignore the TODO file in curr dir)
+
+build/ ( ignore all files in dir of build)
+
+doc/*.txt(ignore doc/notes.txt but not doc/server/arch.txt)
+
+doc/**/*.pdf
+
+```
+
+TO view staged and unstaged changes, git status can be a bit vague so we use `git diff` for these 2 questions
+What have changed but not staged and what have we staged that we want to commit, git diff shows exactly what lines were added or removed.
 
 
