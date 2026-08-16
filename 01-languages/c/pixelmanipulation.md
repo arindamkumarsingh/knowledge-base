@@ -491,7 +491,7 @@ void put_pixel(int x, int y, uint32_t color){
     //Todo: converting x and y into array-index
 
     framebuffer[WIDTH*y + x] = color;
-
+`
 }
 
 int main(void){
@@ -1346,3 +1346,28 @@ Copy the previous one for the code made from scratch, then understand this.
 
 
 
+## MY tinkerings
+
+```c
+    while(is_running){
+
+        while(SDL_PollEvent(&event)){
+            if(event.type == SDL_EVENT_QUIT){
+                is_running = 0;
+            }
+        }
+        SDL_RenderClear(renderer);
+        SDL_RenderPresent(renderer);
+    
+
+    framebuffer[27000] = 0xFF0000;
+
+    SDL_UpdateTexture(texture, NULL, framebuffer, WIDTH * sizeof(uint32_t));
+
+    SDL_RenderClear(renderer);
+    SDL_RenderTexture(renderer, texture, NULL, NULL);
+    SDL_RenderPresent(renderer);
+    }
+    ```
+
+    adding the renderclear and present just after the while and doing so again after updating texture, gives the blinking effect.
